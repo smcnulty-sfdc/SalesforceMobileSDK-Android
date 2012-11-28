@@ -509,6 +509,7 @@ public class ClientManager {
         private static final String PASSCODE_HASH = "passcodeHash";
         private static final String LOGIN_URL = "loginUrl";
         private static final String CLIENT_SECRET = "clientSecret";
+        private static final String GCM_SENDER_ID = "gcmSenderId";
 
         public String loginUrl;
         public String passcodeHash;
@@ -517,6 +518,7 @@ public class ClientManager {
         public final String[] oauthScopes;
         private final Bundle bundle;
         public String clientSecret;
+        public String gcmApplicationId;
 
         public LoginOptions(String loginUrl, String passcodeHash, String oauthCallbackUrl, String oauthClientId, String[] oauthScopes) {
             this.loginUrl = loginUrl;
@@ -538,6 +540,11 @@ public class ClientManager {
             bundle.putString(CLIENT_SECRET, clientSecret);
         }
 
+        public LoginOptions(String loginUrl, String passcodeHash, String oauthCallbackUrl, String oauthClientId, String[] oauthScopes, String clientSecret, String gcmApplicationId) {
+            this(loginUrl, passcodeHash, oauthCallbackUrl, oauthClientId, oauthScopes, clientSecret);
+            bundle.putString(GCM_SENDER_ID, gcmApplicationId);
+        }
+        
         public Bundle asBundle() {
             return bundle;
         }
@@ -548,7 +555,8 @@ public class ClientManager {
                                     options.getString(OAUTH_CALLBACK_URL),
                                     options.getString(OAUTH_CLIENT_ID),
                                     options.getStringArray(OAUTH_SCOPES),
-                                    options.getString(CLIENT_SECRET));
+                                    options.getString(CLIENT_SECRET),
+                                    options.getString(GCM_SENDER_ID));
         }
     }
 }

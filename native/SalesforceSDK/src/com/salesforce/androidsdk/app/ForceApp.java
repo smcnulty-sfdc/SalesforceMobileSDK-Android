@@ -43,6 +43,7 @@ import com.salesforce.androidsdk.auth.AccountWatcher;
 import com.salesforce.androidsdk.auth.AccountWatcher.AccountRemoved;
 import com.salesforce.androidsdk.auth.HttpAccess;
 import com.salesforce.androidsdk.auth.LoginServerManager;
+import com.salesforce.androidsdk.gcm.SFPushNotification;
 import com.salesforce.androidsdk.phonegap.BootConfig;
 import com.salesforce.androidsdk.rest.ClientManager;
 import com.salesforce.androidsdk.rest.ClientManager.LoginOptions;
@@ -174,6 +175,7 @@ public abstract class ForceApp extends Application implements AccountRemoved {
 
         // Upgrade to the latest version.
         UpgradeManager.getInstance().upgradeAccMgr();
+        SFPushNotification.registerGCM();
         EventsObservable.get().notifyEvent(EventType.AppCreateComplete);
     }
 
@@ -292,6 +294,7 @@ public abstract class ForceApp extends Application implements AccountRemoved {
         passcodeManager = null;
         encryptionKey = null;
         UUIDManager.resetUuids();
+        SFPushNotification.unregisterGCM();
     }
 
     /**
